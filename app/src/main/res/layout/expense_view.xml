@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="7dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ProfileExpenseAdapter"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:backgroundTint="@color/black"
+        app:cardCornerRadius="10dp">
+        <LinearLayout
+            android:id="@+id/expenseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/expense_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expense Name"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs.XXX"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:layout_marginTop="50dp">-->
+        <!--            <TextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:text="___________________________________________"-->
+        <!--                android:textSize="20sp"-->
+        <!--                android:textColor="@color/white"/>-->
+        <!--        </LinearLayout>-->
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
