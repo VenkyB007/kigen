@@ -33,5 +33,10 @@ class ExpenseActivity : AppCompatActivity() {
             val intent = Intent(this, CreateExpense::class.java)
             startActivity(intent)
         }
+        setRecycler(id)
+    }
+    fun setRecycler(pos: Int){
+        expense_list.adapter = ExpenseAdapter(DataObject.getAllExpenseData(pos))
+        expense_list.layoutManager = LinearLayoutManager(this)
     }
 }
