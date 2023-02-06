@@ -21,22 +21,37 @@ class ExpenseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expense_list)
 
-        val id = intent.getIntExtra("id",0)
-        var database: myDatabase = Room.databaseBuilder(
+        val position = intent.getIntExtra("position",0)
+        val database: myDatabase = Room.databaseBuilder(
             applicationContext, myDatabase::class.java, "Kigen"
         ).fallbackToDestructiveMigration().build()
         GlobalScope.launch {
-            DataObject.listExpense = database.edao().getExpense(id) as MutableList<ExpenseInfo>
+            val listExpense = database.edao().getExpense(position) as MutableList<ExpenseInfo>
+            setRecycler(listExpense)
         }
 
         add.setOnClickListener {
             val intent = Intent(this, CreateExpense::class.java)
+            intent.putExtra("position", position)
             startActivity(intent)
         }
-        setRecycler(id)
+        deleteAllExpense.setOnClickListener{
+            DataObject.deleteAllProfileExpenses(position)
+            GlobalScope.launch {
+                database.edao().deleteAllProfileExpense(position)
+                val listExpense = database.edao().getExpense(position) as MutableList<ExpenseInfo>
+                setRecycler(listExpense)
+            }
+        }
     }
-    fun setRecycler(pos: Int){
-        expense_list.adapter = ExpenseAdapter(DataObject.getAllExpenseData(pos))
-        expense_list.layoutManager = LinearLayoutManager(this)
+    fun setRecycler(listExpense: List<ExpenseInfo>){
+        val expenselist = findViewById<RecyclerView>(R.id.expense_list)
+        expenselist.adapter = ExpenseAdapter(listExpense)
+        expenselist.layoutManager = LinearLayoutManager(this@ExpenseActivity)
     }
+
+}
+
+interface ItemClickListener {
+    fun onItemClick(position: Int)
 }

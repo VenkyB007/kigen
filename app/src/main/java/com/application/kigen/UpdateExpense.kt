@@ -29,6 +29,7 @@ class UpdateExpense: AppCompatActivity() {
                     database.edao().deleteTask(
                         ExpenseEntity(
                             pos + 1,
+                            pos,
                             update_expense_name.text.toString(),
                             update_price.text.toString()
                         )
@@ -46,7 +47,9 @@ class UpdateExpense: AppCompatActivity() {
                 GlobalScope.launch {
                     database.edao().updateTask(
                         ExpenseEntity(
-                            pos + 1, update_expense_name.text.toString(),
+                            pos + 1,
+                            pos,
+                            update_expense_name.text.toString(),
                             update_price.text.toString()
                         )
                     )

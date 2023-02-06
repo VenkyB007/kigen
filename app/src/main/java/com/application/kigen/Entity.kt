@@ -14,6 +14,7 @@ data class Entity(
 data class ExpenseEntity(
     @PrimaryKey(autoGenerate = true)
     var id:Int,
+    var profileId: Int,
     var name: String,
     var price: String
 )

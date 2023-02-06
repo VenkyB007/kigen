@@ -17,9 +17,9 @@ interface EDAO {
     @Delete
     suspend fun deleteTask(entity: ExpenseEntity)
 
-    @Query("Delete from expense")
-    suspend fun deleteAll()
+    @Query("Delete from expense where profileId like :profileId")
+    suspend fun deleteAllProfileExpense(profileId:Int)
 
-    @Query("Select * from expense where id like :id")
+    @Query("Select * from expense where profileId like :id")
     suspend fun getExpense(id:Int):List<ExpenseInfo>
 }

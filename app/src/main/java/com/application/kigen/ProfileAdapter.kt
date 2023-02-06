@@ -22,14 +22,12 @@ class ProfileAdapter(var data: List<ProfileInfo>) : RecyclerView.Adapter<Profile
     }
 
     override fun onBindViewHolder(holder: profileViewHolder, position: Int) {
-
         holder.name.text = data[position].name
         holder.itemView.setOnClickListener{
             val intent= Intent(holder.itemView.context,ExpenseActivity::class.java)
-            intent.putExtra("id",position)
+            intent.putExtra("position",position)
             holder.itemView.context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount(): Int {

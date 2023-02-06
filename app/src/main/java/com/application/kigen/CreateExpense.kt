@@ -2,6 +2,7 @@ package com.application.kigen
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_create_expense.*
@@ -16,19 +17,24 @@ class CreateExpense:AppCompatActivity() {
         database = Room.databaseBuilder(
             applicationContext, myDatabase::class.java, "Kigen"
         ).build()
-        ex_save_button.setOnClickListener {
-            if (create_expense.text.toString().trim { it <= ' ' }.isNotEmpty()
-                && create_price.text.toString().trim { it <= ' ' }.isNotEmpty()
-            ) {
-                var name = create_expense.getText().toString()
-                var price = create_price.text.toString()
+        val profileId = intent.getIntExtra("position", -1)
 
-                DataObject.setExpenseData(name, price)
-                GlobalScope.launch {
-                    database.edao().insertTask(ExpenseEntity(0, name, price))
+        ex_save_button.setOnClickListener {
+            if (profileId!=-1){
+                if (create_expense.text.toString().trim { it <= ' ' }.isNotEmpty()
+                    && create_price.text.toString().trim { it <= ' ' }.isNotEmpty()
+                ) {
+
+                    var name = create_expense.getText().toString()
+                    var price = create_price.text.toString()
+
+                    DataObject.setExpenseData(profileId,name, price)
+                    GlobalScope.launch {
+                        database.edao().insertTask(ExpenseEntity(profileId+1,profileId, name, price))
+                    }
+                    val intent = Intent(this, ExpenseActivity::class.java)
+                    startActivity(intent)
                 }
-                val intent = Intent(this, ExpenseActivity::class.java)
-                startActivity(intent)
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.application.kigen
 
+import androidx.room.Room
+
 object DataObject{
     var listProfiles = mutableListOf<ProfileInfo>()
 
@@ -10,32 +12,29 @@ object DataObject{
         listProfiles.add(ProfileInfo(name,0))
     }
 
+    fun deleteAllProfiles(){
+        listProfiles.clear()
+    }
 
+    ////////////////////////////////////////////
+    /*          Expense Data Operations      */
+    ///////////////////////////////////////////
 
     var listExpense = mutableListOf<ExpenseInfo>()
-    var listoflistExpense: MutableList<MutableList<ExpenseInfo>> = mutableListOf()
 
-    fun getEmptyData(): List<ExpenseInfo>{
-        return listExpense
-    }
-    fun getalldata(): MutableList<MutableList<ExpenseInfo>>{
-        return listoflistExpense
-    }
-//    fun setExpenseData(pos: Int, name: String, price: String){
-//        listExpense.add(ExpenseInfo(name,price))
-//        listoflistExpense.add(listExpense)
-//    }
-    fun setExpenseData(name:String,price: String){
-        listExpense.add(ExpenseInfo(name,price))
-    }
-    fun getAllExpenseData(pos:Int): List<ExpenseInfo>{
-        if (listoflistExpense[pos].isEmpty()){
-            return listExpense
-        }
-        return listoflistExpense[pos]
+    fun setExpenseData(profileId: Int,name:String,price: String){
+        listExpense.add(ExpenseInfo(profileId,name,price))
     }
     fun getData(pos: Int): ExpenseInfo{
         return listExpense[pos]
+    }
+
+    fun deleteAllProfileExpenses(profileId: Int) {
+        for (i in listExpense){
+            if (i.profileId == profileId){
+                listExpense.remove(i)
+            }
+        }
     }
     fun deleteData(pos:Int): ExpenseInfo{
         return listExpense[pos]
