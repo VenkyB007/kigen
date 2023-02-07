@@ -9,23 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.mytheme">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".activity.SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".UpdateExpense"
+            android:name=".activity.UpdateExpense"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CreateProfile"
+            android:name=".activity.CreateProfile"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
 
         </activity>
         <activity android:name=".ExpenseActivity" />
-        <activity android:name=".CreateExpense" />
+        <activity android:name=".activity.CreateExpense" />
 
     </application>
 

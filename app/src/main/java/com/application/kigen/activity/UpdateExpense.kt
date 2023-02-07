@@ -1,9 +1,13 @@
-package com.application.kigen
+package com.application.kigen.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import com.application.kigen.database.DataObject
+import com.application.kigen.ExpenseEntity
+import com.application.kigen.R
+import com.application.kigen.database.myDatabase
 import kotlinx.android.synthetic.main.activity_update_expense.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

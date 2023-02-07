@@ -1,6 +1,8 @@
-package com.application.kigen
+package com.application.kigen.database.dao
 
 import androidx.room.*
+import com.application.kigen.Entity
+import com.application.kigen.model.ProfileInfo
 
 @Dao
 interface DAO {

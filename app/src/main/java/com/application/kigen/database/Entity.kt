@@ -1,4 +1,4 @@
-package com.application.kigen
+package com.application.kigen.database
 
 import androidx.room.PrimaryKey
 

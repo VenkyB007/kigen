@@ -1,4 +1,4 @@
-package com.application.kigen
+package com.application.kigen.model
 
 data class ExpenseInfo(
     var profileId: Int,

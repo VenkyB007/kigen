@@ -1,4 +1,4 @@
-package com.application.kigen
+package com.application.kigen.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import com.application.kigen.database.DataObject
+import com.application.kigen.model.ProfileInfo
+import com.application.kigen.R
+import com.application.kigen.database.myDatabase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

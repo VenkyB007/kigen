@@ -1,6 +1,7 @@
-package com.application.kigen
+package com.application.kigen.database
 
-import androidx.room.Room
+import com.application.kigen.model.ExpenseInfo
+import com.application.kigen.model.ProfileInfo
 
 object DataObject{
     var listProfiles = mutableListOf<ProfileInfo>()
@@ -25,7 +26,7 @@ object DataObject{
     fun setExpenseData(profileId: Int,name:String,price: String){
         listExpense.add(ExpenseInfo(profileId,name,price))
     }
-    fun getData(pos: Int): ExpenseInfo{
+    fun getData(pos: Int): ExpenseInfo {
         return listExpense[pos]
     }
 
@@ -36,7 +37,7 @@ object DataObject{
             }
         }
     }
-    fun deleteData(pos:Int): ExpenseInfo{
+    fun deleteData(pos:Int): ExpenseInfo {
         return listExpense[pos]
     }
     fun updateData(pos:Int,name:String,price:String){

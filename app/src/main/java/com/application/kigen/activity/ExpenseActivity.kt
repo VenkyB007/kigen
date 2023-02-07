@@ -1,4 +1,4 @@
-package com.application.kigen
+package com.application.kigen.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,11 @@ import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.application.kigen.R
+import com.application.kigen.adapter.ExpenseAdapter
+import com.application.kigen.database.DataObject
+import com.application.kigen.database.myDatabase
+import com.application.kigen.model.ExpenseInfo
 import kotlinx.android.synthetic.main.activity_expense_list.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.add

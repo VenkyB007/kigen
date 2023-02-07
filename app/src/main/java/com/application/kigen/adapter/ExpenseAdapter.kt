@@ -1,14 +1,14 @@
-package com.application.kigen
+package com.application.kigen.adapter
 
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.application.kigen.R
+import com.application.kigen.activity.UpdateExpense
+import com.application.kigen.model.ExpenseInfo
 import kotlinx.android.synthetic.main.expense_view.view.*
-import kotlinx.android.synthetic.main.profile_view.view.*
 
 class ExpenseAdapter(var data: List<ExpenseInfo>) : RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
     class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -28,7 +28,7 @@ class ExpenseAdapter(var data: List<ExpenseInfo>) : RecyclerView.Adapter<Expense
         holder.name.text = data[position].name
         holder.price.text = data[position].price
         holder.itemView.setOnClickListener{
-            val intent= Intent(holder.itemView.context,UpdateExpense::class.java)
+            val intent= Intent(holder.itemView.context, UpdateExpense::class.java)
             intent.putExtra("id",position)
             holder.itemView.context.startActivity(intent)
         }
