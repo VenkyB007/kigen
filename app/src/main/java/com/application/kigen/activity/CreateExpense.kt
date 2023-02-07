@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.application.kigen.database.DataObject
-import com.application.kigen.ExpenseEntity
 import com.application.kigen.R
+import com.application.kigen.database.ExpenseEntity
 import com.application.kigen.database.myDatabase
 import kotlinx.android.synthetic.main.activity_create_expense.*
 import kotlinx.coroutines.GlobalScope
@@ -35,8 +35,8 @@ class CreateExpense:AppCompatActivity() {
                     GlobalScope.launch {
                         database.edao().insertTask(ExpenseEntity(profileId+1,profileId, name, price))
                     }
-                    val intent = Intent(this, ExpenseActivity::class.java)
-                    startActivity(intent)
+                    setResult(2)
+                    finish()
                 }
             }
         }
