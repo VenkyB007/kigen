@@ -1,3 +1,4 @@
+
 package com.application.kigen
 
 import androidx.room.Room
@@ -29,12 +30,26 @@ object DataObject{
         return listExpense[pos]
     }
 
-    fun deleteAllProfileExpenses(profileId: Int) {
+
+    fun getProfileExpense(pos: Int): List<ExpenseInfo>{
+        val profileExpense = mutableListOf<ExpenseInfo>()
         for (i in listExpense){
-            if (i.profileId == profileId){
-                listExpense.remove(i)
+            if (i.profileId==pos){
+                profileExpense.add(i)
             }
         }
+        return profileExpense
+    }
+
+    fun deleteAllProfileExpenses(profileId: Int) :List<ExpenseInfo> {
+        val iterator = listExpense.iterator()
+        while (iterator.hasNext()) {
+            val i = iterator.next()
+            if (i.profileId == profileId) {
+                iterator.remove()
+            }
+        }
+        return listExpense
     }
     fun deleteData(pos:Int): ExpenseInfo{
         return listExpense[pos]

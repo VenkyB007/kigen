@@ -2,7 +2,6 @@ package com.application.kigen
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_create_expense.*
@@ -24,13 +23,12 @@ class CreateExpense:AppCompatActivity() {
                 if (create_expense.text.toString().trim { it <= ' ' }.isNotEmpty()
                     && create_price.text.toString().trim { it <= ' ' }.isNotEmpty()
                 ) {
-
-                    var name = create_expense.getText().toString()
-                    var price = create_price.text.toString()
+                    val name = create_expense.text.toString()
+                    val price = create_price.text.toString()
 
                     DataObject.setExpenseData(profileId,name, price)
                     GlobalScope.launch {
-                        database.edao().insertTask(ExpenseEntity(profileId+1,profileId, name, price))
+                        database.edao().insertTask(ExpenseEntity(0,profileId, name, price))
                     }
                     val intent = Intent(this, ExpenseActivity::class.java)
                     startActivity(intent)

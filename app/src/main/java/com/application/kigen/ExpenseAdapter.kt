@@ -1,14 +1,11 @@
 package com.application.kigen
 
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.expense_view.view.*
-import kotlinx.android.synthetic.main.profile_view.view.*
 
 class ExpenseAdapter(var data: List<ExpenseInfo>) : RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder>() {
     class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
