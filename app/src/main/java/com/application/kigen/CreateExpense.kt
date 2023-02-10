@@ -1,5 +1,6 @@
 package com.application.kigen
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,8 +31,8 @@ class CreateExpense:AppCompatActivity() {
                     GlobalScope.launch {
                         database.edao().insertTask(ExpenseEntity(0,profileId, name, price))
                     }
-                    val intent = Intent(this, ExpenseActivity::class.java)
-                    startActivity(intent)
+                    setResult(Activity.RESULT_OK)
+                    finish()
                 }
             }
         }

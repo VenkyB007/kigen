@@ -1,5 +1,6 @@
 package com.application.kigen
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,17 +21,13 @@ class ExpenseActivity : AppCompatActivity() {
         val database: myDatabase = Room.databaseBuilder(
             applicationContext, myDatabase::class.java, "Kigen"
         ).fallbackToDestructiveMigration().build()
-//        GlobalScope.launch {
-//            val listExpense = database.edao().getExpense(position) as MutableList<ExpenseInfo>
-//            setRecycler(listExpense)
-//            setRecycler(position)
-//        }
 
         add.setOnClickListener {
             val intent = Intent(this, CreateExpense::class.java)
             intent.putExtra("position", position)
-            startActivity(intent)
+            startActivityForResult(intent, 1)
         }
+
         deleteAllExpense.setOnClickListener{
             DataObject.deleteAllProfileExpenses(position)
             GlobalScope.launch {
@@ -40,9 +37,16 @@ class ExpenseActivity : AppCompatActivity() {
         }
         setRecycler(position)
     }
+
     fun setRecycler(position: Int){
         expense_list.adapter = ExpenseAdapter(DataObject.getProfileExpense(position))
         expense_list.layoutManager = LinearLayoutManager(this@ExpenseActivity)
     }
-
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            setRecycler(intent.getIntExtra("position",0))
+        }
+    }
 }

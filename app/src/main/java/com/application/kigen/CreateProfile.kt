@@ -1,5 +1,6 @@
 package com.application.kigen
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +27,8 @@ class CreateProfile: AppCompatActivity() {
                 }
 
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                setResult(Activity.RESULT_OK)
+                finish()
             }
         }
     }

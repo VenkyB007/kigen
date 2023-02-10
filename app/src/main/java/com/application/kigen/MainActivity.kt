@@ -1,5 +1,6 @@
 package com.application.kigen
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         ).build()
         add.setOnClickListener {
             val intent = Intent(this, CreateProfile::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 1)
         }
         deleteAllProfiles.setOnClickListener{
             DataObject.deleteAllProfiles()
@@ -33,5 +34,12 @@ class MainActivity : AppCompatActivity() {
     fun setRecycler() {
         profile_view.adapter = ProfileAdapter(DataObject.getAllData())
         profile_view.layoutManager = LinearLayoutManager(this)
+    }
+    @Suppress("DEPRECATION")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            setRecycler()
+        }
     }
 }

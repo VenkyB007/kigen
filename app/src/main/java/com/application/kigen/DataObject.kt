@@ -10,11 +10,21 @@ object DataObject{
         return listProfiles
     }
     fun setProfileData(id:Int,name: String){
-        listProfiles.add(ProfileInfo(name,0))
+        listProfiles.add(ProfileInfo(name,""))
     }
 
     fun deleteAllProfiles(){
         listProfiles.clear()
+    }
+
+    fun getAllTotalByProfileId(pos: Int):String{
+        var sum = 0
+        for (i in listExpense){
+            if (i.profileId == pos){
+                sum += (i.price).toInt()
+            }
+        }
+        return sum.toString()
     }
 
     ////////////////////////////////////////////
