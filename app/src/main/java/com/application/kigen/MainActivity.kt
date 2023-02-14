@@ -42,4 +42,9 @@ class MainActivity : AppCompatActivity() {
             setRecycler()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        setRecycler()
+    }
 }
