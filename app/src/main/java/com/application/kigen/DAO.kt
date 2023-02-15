@@ -12,6 +12,8 @@ interface DAO {
 
     @Query("Delete from profiles")
     suspend fun deleteAll()
+    @Query("Delete from profiles where name like :name")
+    suspend fun deleteProfilebyName(name: String)
 
     @Query("Select * from profiles")
     suspend fun getTasks():List<ProfileInfo>

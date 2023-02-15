@@ -17,6 +17,9 @@ class MainActivity : AppCompatActivity() {
         val database: myDatabase = Room.databaseBuilder(
             applicationContext, myDatabase::class.java, "Kigen"
         ).build()
+        GlobalScope.launch {
+            DataObject.listExpense = database.edao().getAllExpenses() as MutableList<ExpenseInfo>
+        }
         add.setOnClickListener {
             val intent = Intent(this, CreateProfile::class.java)
             startActivityForResult(intent, 1)

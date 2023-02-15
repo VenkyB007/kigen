@@ -22,4 +22,8 @@ interface EDAO {
 
     @Query("Select * from expense where profileId like :id")
     suspend fun getExpense(id:Int):List<ExpenseInfo>
+    @Query("Select * from expense")
+    suspend fun getAllExpenses():List<ExpenseInfo>
+
+
 }

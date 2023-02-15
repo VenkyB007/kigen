@@ -17,6 +17,11 @@ object DataObject{
         listProfiles.clear()
     }
 
+    fun deleteProfilebyPos(pos: Int) {
+        listProfiles.removeAt(pos)
+
+    }
+
     fun getAllTotalByProfileId(pos: Int):String{
         var sum = 0
         for (i in listExpense){
