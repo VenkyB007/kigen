@@ -32,10 +32,10 @@ object DataObject{
     }
 
     fun getAllTotalByProfileId(pos: Int):String{
-        var sum = 0
+        var sum:Double = 0.0
         for (i in listExpense){
             if (i.profileId == pos){
-                sum += (i.price).toInt()
+                sum += (i.price).toDouble()
             }
         }
         return sum.toString()

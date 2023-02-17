@@ -28,7 +28,7 @@ class CreateExpense : AppCompatActivity() {
 
                 if (name.isNotEmpty() && priceText.isNotEmpty()) {
                     // Check that price is a valid number
-                    val regex = Regex("[0-9]+")
+                    val regex = Regex("^\\d+(\\.\\d+)?$")
                     if (!priceText.matches(regex)) {
                         // Display error toast message
                         Toast.makeText(
@@ -37,15 +37,25 @@ class CreateExpense : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         return@setOnClickListener
+                    }else if (priceText.toDouble()>10000){
+                        Toast.makeText(
+                            this,
+                            "Invalid input: Since, Entered price amount is too high (>10,000) which you can easily remember",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@setOnClickListener
+                    }else{
+                        var price = priceText.toDouble()
+
+                        DataObject.setExpenseData(profileId, name, price.toString())
+                        GlobalScope.launch {
+                            database.edao().insertExpense(ExpenseEntity(0, profileId, name, price.toString()))
+                        }
+                        setResult(Activity.RESULT_OK)
+                        finish()
                     }
 
-                    var price = priceText.toInt()
-                    DataObject.setExpenseData(profileId, name, price.toString())
-                    GlobalScope.launch {
-                        database.edao().insertExpense(ExpenseEntity(0, profileId, name, price.toString()))
-                    }
-                    setResult(Activity.RESULT_OK)
-                    finish()
+
                 }
             }
         }
