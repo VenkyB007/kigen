@@ -4,9 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract.Data
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -18,11 +21,12 @@ import kotlinx.coroutines.launch
 import java.text.FieldPosition
 
 class ExpenseActivity : AppCompatActivity() {
+    private val position = intent?.getIntExtra("position",0) ?: 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expense_list)
-
         val position = intent.getIntExtra("position",0)
+
         val database: myDatabase = Room.databaseBuilder(
             applicationContext, myDatabase::class.java, "Kigen"
         ).fallbackToDestructiveMigration().build()
@@ -39,32 +43,36 @@ class ExpenseActivity : AppCompatActivity() {
             DataObject.deleteAllProfileExpenses(position)
             GlobalScope.launch {
                 database.edao().deleteAllProfileExpense(position)
-                setRecycler(position)
             }
+            setRecycler(position)
         }
+        swipeToRefreshExpense.setOnRefreshListener{
+            GlobalScope.launch {
+                DataObject.listExpense = database.edao().getAllExpenses() as MutableList<ExpenseInfo>
+            }
 
+            Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show()
+            setRecycler(position)
+
+            swipeToRefreshExpense.isRefreshing = false
+        }
         setRecycler(position)
-
     }
     fun setRecycler(position: Int){
-        val database: myDatabase = Room.databaseBuilder(
-            applicationContext, myDatabase::class.java, "Kigen"
-        ).fallbackToDestructiveMigration().build()
-        GlobalScope.launch {
-            var listExpense = database.edao().getExpense(position)
-            runOnUiThread{
-                val expenselist = findViewById < RecyclerView >(R.id.expense_list)
-                expense_list.adapter = ExpenseAdapter(listExpense)
-                expenselist.layoutManager = LinearLayoutManager(this@ExpenseActivity)
-            }
-        }
+        expense_list.adapter = ExpenseAdapter(DataObject.getProfileExpense(position),position)
+        expense_list.layoutManager = LinearLayoutManager(this@ExpenseActivity)
 
     }
     @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            setRecycler(intent.getIntExtra("position",0))
+            setRecycler(position)
+            expense_list.adapter?.let { adapter ->
+                if (adapter is ExpenseAdapter) {
+                    adapter.updateData(DataObject.getProfileExpense(position))
+                }
+            }
         }
     }
 }

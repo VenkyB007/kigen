@@ -5,9 +5,9 @@
 
     <item
         android:id="@+id/action_edit"
-        android:icon="@drawable/profile_edit"
+        android:icon="@drawable/expense_edit"
         android:title="   Edit"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_delete"

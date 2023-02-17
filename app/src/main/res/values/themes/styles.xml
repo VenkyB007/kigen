@@ -1,0 +1,3 @@
+<style name="MyPopupMenu" parent="@style/Widget.AppCompat.PopupMenu">
+    <item name="android:popupBackground">#F44336</item>
+</style>

@@ -6,6 +6,15 @@ import androidx.room.Room
 object DataObject{
     var listProfiles = mutableListOf<ProfileInfo>()
 
+    fun isProfileNameUnique(name: String):Boolean{
+        for(i in listProfiles){
+            if (i.name == name){
+                return false
+            }
+        }
+        return true
+    }
+
     fun getAllData(): List<ProfileInfo> {
         return listProfiles
     }
@@ -41,8 +50,16 @@ object DataObject{
     fun setExpenseData(profileId: Int,name:String,price: String){
         listExpense.add(ExpenseInfo(profileId,name,price))
     }
-    fun getData(pos: Int): ExpenseInfo{
-        return listExpense[pos]
+    fun getData(pos: Int,epos: Int): ExpenseInfo{
+        var profileExpense = mutableListOf<ExpenseInfo>()
+
+        for(i in listExpense){
+            if (i.profileId == pos){
+                profileExpense.add(i)
+            }
+        }
+
+        return profileExpense[epos]
     }
 
 
@@ -69,8 +86,26 @@ object DataObject{
     fun deleteData(pos:Int): ExpenseInfo{
         return listExpense[pos]
     }
-    fun updateData(pos:Int,name:String,price:String){
-        listExpense[pos].name=name
-        listExpense[pos].price=price
+
+    fun deleteExpensebyNameandPrice(name: String,price: String) {
+        val iterator = listExpense.iterator()
+
+        while (iterator.hasNext()){
+            val item = iterator.next()
+            if (item.name == name && item.price == price){
+                iterator.remove()
+            }
+        }
+    }
+    fun updateData(name:String,price:String){
+        val iterator = listExpense.iterator()
+
+        while (iterator.hasNext()){
+            val item = iterator.next()
+            if (item.name == name && item.price == price){
+                item.name = name
+                item.price = price
+            }
+        }
     }
 }

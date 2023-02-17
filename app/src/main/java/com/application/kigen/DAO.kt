@@ -5,7 +5,7 @@ import androidx.room.*
 @Dao
 interface DAO {
     @Insert
-    suspend fun insertTask(entity: Entity)
+    suspend fun insertProfile(entity: Entity)
 
     @Delete
     suspend fun deleteTask(entity: Entity)

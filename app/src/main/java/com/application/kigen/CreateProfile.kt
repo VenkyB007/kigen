@@ -3,6 +3,7 @@ package com.application.kigen
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_create_profile.*
@@ -19,16 +20,21 @@ class CreateProfile: AppCompatActivity() {
             applicationContext, myDatabase::class.java, "Kigen"
         ).build()
         save_button.setOnClickListener {
-            if (create_profile.text.toString().trim { it <= ' ' }.isNotEmpty()) {
-                var title = create_profile.text.toString()
-                DataObject.setProfileData(0,title)
-                GlobalScope.launch {
-                    database.dao().insertTask(Entity(0, title, 0))
+            val profileName = create_profile.text.toString().trim()
+            if (profileName.isNotEmpty()) {
+                if (DataObject.isProfileNameUnique(profileName)) {
+                    DataObject.setProfileData(0, profileName)
+                    GlobalScope.launch {
+                        database.dao().insertProfile(Entity(0, profileName, 0))
+                    }
+                    val intent = Intent().apply {
+                        putExtra("profileName", profileName)
+                    }
+                    setResult(Activity.RESULT_OK, intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Profile \"$profileName\" already exists", Toast.LENGTH_LONG).show()
                 }
-
-                val intent = Intent(this, MainActivity::class.java)
-                setResult(Activity.RESULT_OK)
-                finish()
             }
         }
     }
