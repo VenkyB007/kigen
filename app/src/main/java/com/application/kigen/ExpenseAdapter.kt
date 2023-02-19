@@ -24,6 +24,7 @@ class ExpenseAdapter(var data: List<ExpenseInfo>, private val profilePosition: I
         var name = itemView.expense_name
         var price = itemView.price
         var layout = itemView.expenseLayout
+        var increase_button = itemView.increase_expenseByOne
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseViewHolder {
@@ -32,11 +33,25 @@ class ExpenseAdapter(var data: List<ExpenseInfo>, private val profilePosition: I
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
-    @SuppressLint("DiscouragedPrivateApi", "NotifyDataSetChanged")
+    @SuppressLint("DiscouragedPrivateApi", "NotifyDataSetChanged", "SetTextI18n")
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) {
 
         holder.name.text = data[position].name
         holder.price.text = data[position].price
+
+        holder.increase_button.setOnClickListener{
+            val name = holder.name.text.toString()
+            val price = holder.price.text.toString()
+            val database: myDatabase = Room.databaseBuilder(
+                holder.itemView.context, myDatabase::class.java, "Kigen"
+            ).build()
+            GlobalScope.launch {
+                database.edao().increasePriceByNameAndPrice(name,price)
+            }
+            DataObject.updateExpenseByNameandPrice(name,price)
+
+            holder.price.text = (price.toLong() + 1).toString()
+        }
 
 
         holder.itemView.setOnLongClickListener{view->

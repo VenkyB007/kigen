@@ -45,11 +45,12 @@ class CreateExpense : AppCompatActivity() {
                         ).show()
                         return@setOnClickListener
                     }else{
-                        var price = priceText.toDouble()
+                        val price = priceText.toDouble()
 
                         DataObject.setExpenseData(profileId, name, price.toString())
                         GlobalScope.launch {
                             database.edao().insertExpense(ExpenseEntity(0, profileId, name, price.toString()))
+                            database.dao().getProfileTotalExpense(profileId)
                         }
                         setResult(Activity.RESULT_OK)
                         finish()

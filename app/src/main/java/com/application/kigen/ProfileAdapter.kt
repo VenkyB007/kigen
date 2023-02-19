@@ -39,6 +39,13 @@ class ProfileAdapter(var data: List<ProfileInfo>) : RecyclerView.Adapter<Profile
     @SuppressLint("DiscouragedPrivateApi", "RtlHardcoded")
     override fun onBindViewHolder(holder: profileViewHolder, position: Int) {
 
+        val database: myDatabase = Room.databaseBuilder(
+            holder.itemView.context, myDatabase::class.java, "Kigen"
+        ).build()
+        GlobalScope.launch {
+            database.dao().getProfileTotalExpense(position)
+        }
+
 
         holder.name.text = data[position].name
         holder.total.text = DataObject.getAllTotalByProfileId(position)

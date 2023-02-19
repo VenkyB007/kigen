@@ -108,4 +108,15 @@ object DataObject{
             }
         }
     }
+
+    fun updateExpenseByNameandPrice(name: String,price: String) {
+        val iterator = listExpense.iterator()
+
+        while (iterator.hasNext()){
+            val item = iterator.next()
+            if (item.name == name && item.price == price){
+                item.price = item.price+1
+            }
+        }
+    }
 }

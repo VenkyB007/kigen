@@ -11,6 +11,12 @@ interface EDAO {
     @Insert
     suspend fun insertExpense(entity: ExpenseEntity)
 
+    @Query("UPDATE expense SET price = price + 1 WHERE name = :name AND price = :price")
+    suspend fun increasePriceByNameAndPrice(name: String, price: String)
+
+    @Query("UPDATE expense SET price = price - 1 WHERE name = :name AND price = :price")
+    suspend fun decreasePriceByNameAndPrice(name: String, price: String)
+
     @Update
     suspend fun updateExpense(entity: ExpenseEntity)
 

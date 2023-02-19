@@ -17,7 +17,8 @@ interface DAO {
 
     @Query("Select * from profiles")
     suspend fun getTasks():List<ProfileInfo>
-    @Query("Select SUM(price) from expense where profileId like :pos")
-    suspend fun getProfileTotalExpense(pos: Int) :Int
+    //@Query("Update expense SET SUM(price) where profileId like :pos")
+    @Query("UPDATE expense SET price = (SELECT SUM(price) FROM expense WHERE profileId LIKE :pos) WHERE profileId LIKE :pos")
+    suspend fun getProfileTotalExpense(pos: Int)-
 
 }

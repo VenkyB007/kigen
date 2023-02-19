@@ -16,16 +16,16 @@ import androidx.room.Room
 import kotlinx.android.synthetic.main.activity_expense_list.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.add
+import kotlinx.android.synthetic.main.expense_view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 
 class ExpenseActivity : AppCompatActivity() {
-    private val position = intent?.getIntExtra("position",0) ?: 0
+    private val profilePosition = intent?.getIntExtra("profilePosition",0) ?: 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expense_list)
-        val position = intent.getIntExtra("position",0)
+        val profilePosition = intent.getIntExtra("position",0)
 
         val database: myDatabase = Room.databaseBuilder(
             applicationContext, myDatabase::class.java, "Kigen"
@@ -34,17 +34,17 @@ class ExpenseActivity : AppCompatActivity() {
 
         add.setOnClickListener {
             val intent = Intent(this, CreateExpense::class.java)
-            intent.putExtra("position", position)
+            intent.putExtra("profilePosition", profilePosition)
             startActivityForResult(intent, 1)
 
         }
         deleteAllExpense.setOnClickListener{
 
-            DataObject.deleteAllProfileExpenses(position)
+            DataObject.deleteAllProfileExpenses(profilePosition)
             GlobalScope.launch {
-                database.edao().deleteAllProfileExpense(position)
+                database.edao().deleteAllProfileExpense(profilePosition)
             }
-            setRecycler(position)
+            setRecycler(profilePosition)
         }
         swipeToRefreshExpense.setOnRefreshListener{
             GlobalScope.launch {
@@ -52,27 +52,16 @@ class ExpenseActivity : AppCompatActivity() {
             }
 
             Toast.makeText(this, "Refreshed", Toast.LENGTH_SHORT).show()
-            setRecycler(position)
+            setRecycler(profilePosition)
 
             swipeToRefreshExpense.isRefreshing = false
         }
-        setRecycler(position)
+        setRecycler(profilePosition)
     }
-    fun setRecycler(position: Int){
-        expense_list.adapter = ExpenseAdapter(DataObject.getProfileExpense(position),position)
+    fun setRecycler(profilePosition: Int){
+        expense_list.adapter = ExpenseAdapter(DataObject.getProfileExpense(profilePosition),profilePosition)
         expense_list.layoutManager = LinearLayoutManager(this@ExpenseActivity)
 
     }
-    @Suppress("DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            setRecycler(position)
-            expense_list.adapter?.let { adapter ->
-                if (adapter is ExpenseAdapter) {
-                    adapter.updateData(DataObject.getProfileExpense(position))
-                }
-            }
-        }
-    }
+
 }
