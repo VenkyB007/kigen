@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import java.text.FieldPosition
 
 class ExpenseActivity : AppCompatActivity() {
-    private val position = intent?.getIntExtra("position",0) ?: 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_expense_list)
@@ -67,12 +66,8 @@ class ExpenseActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            setRecycler(position)
-            expense_list.adapter?.let { adapter ->
-                if (adapter is ExpenseAdapter) {
-                    adapter.updateData(DataObject.getProfileExpense(position))
-                }
-            }
+            val profileId = data?.getIntExtra("position", 0)?:0
+            setRecycler(profileId)
         }
     }
 }

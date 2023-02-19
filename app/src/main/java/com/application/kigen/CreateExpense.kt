@@ -51,7 +51,7 @@ class CreateExpense : AppCompatActivity() {
                         GlobalScope.launch {
                             database.edao().insertExpense(ExpenseEntity(0, profileId, name, price.toString()))
                         }
-                        setResult(Activity.RESULT_OK)
+                        setResult(Activity.RESULT_OK,intent.putExtra("position",profileId))
                         finish()
                     }
 
